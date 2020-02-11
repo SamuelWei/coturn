@@ -1,10 +1,11 @@
 #!/bin/bash
 set -e
-
+USE_AUTH_SECRET = ''
 if [ $ANONYMOUS -eq 0 ]; then
 	USE_CREDENTIALS='lt-cred-mech'
 	
-	if [ $API -eq 0 ]; then
+	if [ $API -eq 1 ]; then
+	USE_AUTH_SECRET = 'use-auth-secret'
 		echo "SECRET: $SECRET"
 	else
 		echo "USERNAME: $USERNAME"
@@ -33,6 +34,7 @@ external-ip="$externalIp"
 realm=$REALM
 server-name=$REALM
 $USE_CREDENTIALS
+$USE_AUTH_SECRET
 mobility
 userdb=/var/lib/turn/turndb
 # use real-valid certificate/privatekey files
@@ -45,7 +47,7 @@ no-stdout-log" | tee /etc/turnserver.conf
 turnadmin -l -r $REALM
 
 if [ $ANONYMOUS -eq 0 ]; then
-	if [ $API -eq 0 ]; then
+	if [ $API -eq 1 ]; then
 		turnadmin -a -s $SECRET -r $REALM
 	else
 		turnadmin -a -u $USERNAME -p $PASSWORD -r $REALM
