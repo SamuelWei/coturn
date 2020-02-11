@@ -3,12 +3,20 @@ set -e
 
 if [ $ANONYMOUS -eq 0 ]; then
 	USE_CREDENTIALS='lt-cred-mech'
-	echo "USERNAME: $USERNAME"
-	echo "PASSWORD: $PASSWORD"
+	
+	if [ $API -eq 0 ]; then
+		echo "SECRET: $SECRET"
+	else
+		echo "USERNAME: $USERNAME"
+		echo "PASSWORD: $PASSWORD"
+	fi	
 else
 	USE_CREDENTIALS='no-auth'
 	echo "Accepting anonymous requests"
 fi
+
+
+
 echo "REALM: $REALM"
 echo "PORT RANGE: $MIN_PORT-$MAX_PORT"
 
@@ -35,7 +43,12 @@ no-tlsv1_1
 no-stdout-log" | tee /etc/turnserver.conf
 
 if [ $ANONYMOUS -eq 0 ]; then
-	turnadmin -a -u $USERNAME -p $PASSWORD -r $REALM
+	if [ $API -eq 0 ]; then
+		turnadmin -a -s $SECRET -r $REALM"
+	else
+		turnadmin -a -u $USERNAME -p $PASSWORD -r $REALM
+	fi	
+	
 fi
 
 echo "Start TURN server..."
