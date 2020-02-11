@@ -42,13 +42,15 @@ no-tlsv1
 no-tlsv1_1
 no-stdout-log" | tee /etc/turnserver.conf
 
+turnadmin -l -r $REALM
+
 if [ $ANONYMOUS -eq 0 ]; then
 	if [ $API -eq 0 ]; then
-		turnadmin -a -s $SECRET -r $REALM"
+		turnadmin -a -s $SECRET -r $REALM
 	else
 		turnadmin -a -u $USERNAME -p $PASSWORD -r $REALM
 	fi	
-	
+
 fi
 
 echo "Start TURN server..."
