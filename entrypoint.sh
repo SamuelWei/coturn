@@ -1,11 +1,11 @@
 #!/bin/bash
 set -e
-USE_AUTH_SECRET = ''
+USE_AUTH_SECRET=''
 if [ $ANONYMOUS -eq 0 ]; then
 	USE_CREDENTIALS='lt-cred-mech'
 	
 	if [ $API -eq 1 ]; then
-	USE_AUTH_SECRET = 'use-auth-secret'
+	USE_AUTH_SECRET='use-auth-secret'
 		echo "SECRET: $SECRET"
 	else
 		echo "USERNAME: $USERNAME"
