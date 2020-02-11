@@ -1,12 +1,16 @@
 FROM buildpack-deps:18.04
-LABEL maintainer="Nazar Mokrynskyi <nazar@mokrynskyi.com>"
+LABEL maintainer="Samuel Weirich <samuel.weirich@ges.thm.de>"
 
 EXPOSE 3478/tcp
 EXPOSE 3478/udp
 
+EXPOSE 5349/tcp
+EXPOSE 5349/udp
+
 ENV ANONYMOUS=0
 ENV USERNAME=username
 ENV PASSWORD=password
+ENV SECRET=secret
 ENV REALM=realm
 ENV LISTEN_PORT=3478
 ENV TLS_LISTEN_PORT=5349
